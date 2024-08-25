@@ -21,9 +21,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={josefin.className}>
-      <body className="bg-primary-950 text-primary-100 min-h-screen">
+      <body className="flex min-h-screen flex-col bg-primary-950 text-primary-100">
         <Header />
-        <main>{children}</main>
+        <div className="flex-1">
+          <main>{children}</main>
+        </div>
       </body>
     </html>
   );
