@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <body className="flex min-h-screen flex-col bg-primary-950 text-primary-100">
         <Header />
         <div className="flex-1">
-          <main>{children}</main>
+          <main className="px-8">{children}</main>
         </div>
       </body>
     </html>
