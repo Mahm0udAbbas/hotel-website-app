@@ -8,9 +8,9 @@ export const metadata = {
 };
 export default function About() {
   return (
-    <div className="my-6 grid grid-cols-3 items-center gap-x-24 gap-y-20 text-center text-lg md:gap-y-32 md:text-left">
+    <div className="container mx-auto grid grid-cols-3 items-center gap-x-24 gap-y-20 text-center text-lg md:gap-y-32 md:text-left">
       <div className="order-1 col-span-3 md:col-span-2">
-        <h1 className="mb-10 mt-10 text-3xl font-medium text-accent-400 md:text-4xl">
+        <h1 className="mb-10 text-3xl font-medium text-accent-400 md:text-4xl">
           Welcome to The Wild Oasis
         </h1>
 
