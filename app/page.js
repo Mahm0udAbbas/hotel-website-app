@@ -3,7 +3,7 @@ import Link from "next/link";
 import bg from "@/public/bg.png";
 export default function Home() {
   return (
-    <main className="flex h-[calc(100vh-100px)] items-center justify-center">
+    <main className="flex items-center justify-center">
       <Image
         src={bg}
         fill
