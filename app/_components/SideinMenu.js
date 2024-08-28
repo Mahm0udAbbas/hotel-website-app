@@ -35,17 +35,17 @@ export default function SideinMenu({ state, toggleMenu }) {
       <ul className="mt-8 flex flex-col items-start">
         <li
           onClick={handleCloseMenu}
-          className="w-full cursor-pointer border-solid border-b-accent-400 py-4 transition duration-300 ease-in-out hover:border-b-2 hover:bg-primary-900 hover:text-accent-400"
+          className="w-full cursor-pointer border-solid border-b-accent-400 transition duration-300 ease-in-out hover:border-b-2 hover:bg-primary-900 hover:text-accent-400"
         >
-          <Link href="/cabins" className="mx-4 w-full">
+          <Link href="/cabins" className="inline-block w-full px-4 py-4">
             Cabins
           </Link>
         </li>
         <li
           onClick={handleCloseMenu}
-          className="w-full cursor-pointer border-solid border-b-accent-400 py-4 transition duration-300 ease-in-out hover:border-b-2 hover:bg-primary-900 hover:text-accent-400"
+          className="w-full cursor-pointer border-solid border-b-accent-400 transition duration-300 ease-in-out hover:border-b-2 hover:bg-primary-900 hover:text-accent-400"
         >
-          <Link href="/about" className="ml-4 w-full">
+          <Link href="/about" className="inline-block w-full px-4 py-4">
             About
           </Link>
         </li>
