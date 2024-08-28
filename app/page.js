@@ -11,7 +11,7 @@ export default function Home() {
         className="object-cover object-center"
         alt="Maountains and forests with two cabins"
       />
-      <section className="container relative z-10 mx-auto flex flex-col items-center justify-center">
+      <section className="container relative mx-auto flex flex-col items-center justify-center">
         <p className="mb-4 py-4 text-center text-4xl text-primary-50 md:text-6xl">
           welcome to paradise.
         </p>

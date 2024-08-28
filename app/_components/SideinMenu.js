@@ -18,7 +18,7 @@ export default function SideinMenu({ state, toggleMenu }) {
 
   return (
     <div
-      className={`fixed left-0 top-0 z-20 h-full w-3/4 max-w-sm bg-primary-700 transition-transform duration-300 ${
+      className={`fixed left-0 top-0 z-10 h-full w-3/4 max-w-sm bg-primary-700 transition-transform duration-300 ${
         state ? "translate-x-0" : "-translate-x-full"
       } md:hidden`}
     >
