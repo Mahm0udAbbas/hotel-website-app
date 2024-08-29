@@ -1,13 +1,16 @@
 import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/Filter";
 
 export const metadata = {
   title: "Cabins",
   description: "Book your cabin at The Wild Oasis",
 };
 
-export default async function Cabin() {
+export default async function Cabin({ searchParams }) {
+  const filter = searchParams?.capacity ?? "all";
+
   return (
     <div className="container mx-auto">
       {" "}
@@ -22,8 +25,11 @@ export default async function Cabin() {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
-      <Suspense fallback={<Spinner />}>
-        <CabinList />{" "}
+      <div className="mb-8 flex flex-1 justify-normal sm:justify-end">
+        <Filter />
+      </div>
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />{" "}
       </Suspense>
     </div>
   );
