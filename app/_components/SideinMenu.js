@@ -13,7 +13,6 @@ export default function SideinMenu({ state, toggleMenu }) {
   function handleCloseMenu() {
     setIsOpen(false);
     toggleMenu();
-    console.log("iam clicked");
   }
 
   return (
