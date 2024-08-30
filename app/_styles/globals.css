@@ -31,9 +31,63 @@
 }
 
 /* For data picker */
-.rdp {
-  --rdp-cell-size: 32px !important;
+.rdp-root {
   --rdp-accent-color: theme("colors.accent.500") !important;
   --rdp-background-color: theme("colors.accent.600") !important;
+  --rdp-weekday-font: 2px !important;
   margin: 0 !important;
+  --rdp-range_middle-background-color: theme("colors.accent.600") !important;
+  --rdp-day_button-width: 22px !important;
+  --rdp-day_button-height: 22px !important;
+}
+
+.rdp-months {
+  gap: 1rem !important;
+  flex-wrap: nowrap !important;
+}
+
+@media (max-width: 570px) {
+  .rdp-months {
+    flex-wrap: wrap !important;
+  }
+  .rdp-month {
+    width: 100% !important;
+  }
+  .rdp-month_grid {
+    width: 100% !important;
+  }
+}
+.rdp-month {
+  padding: 2px 12px;
+  border: 1px solid #2c3d4f;
+}
+
+.rdp-day {
+  width: 22px !important;
+  height: 22px !important;
+  text-align: center;
+}
+.rdp-day_button {
+  font-size: 10px !important;
+}
+.rdp-month_caption {
+  font-size: 12px !important;
+  font-weight: bold !important;
+  text-align: center;
+  justify-content: center;
+}
+
+.rdp-dropdown {
+  padding: 4px !important;
+}
+
+.rdp-dropdown option {
+  padding: 4px;
+  color: black !important;
+}
+.rdp-dropdown option:disabled {
+  color: #b7c7d7 !important;
+}
+.rdp-weekday {
+  font-size: 12px !important;
 }
