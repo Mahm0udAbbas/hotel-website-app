@@ -1,56 +1,47 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
-import Overlay from "./Overlay";
-import SideinMenu from "./SideinMenu";
+import { auth } from "../_lib/auth";
 
-export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  function toggleMenu() {
-    setIsOpen(!isOpen);
-  }
+export default async function Navigation() {
+  const session = await auth();
+  console.log(session);
 
   return (
-    <nav className="relative z-10">
-      {!isOpen && (
-        <div className="flex items-center justify-between p-4 md:hidden">
-          <button
-            className="text-2xl focus:outline-none"
-            onClick={toggleMenu}
-            aria-label="Toggle Menu"
-          >
-            &#9776;
-          </button>
-        </div>
-      )}
-      <Overlay state={isOpen} />
-      <SideinMenu state={isOpen} toggleMenu={toggleMenu} />
-      <ul className="hidden flex-row items-center gap-16 md:flex">
-        <li>
+    <ul className="hidden flex-row items-center gap-16 md:flex">
+      <li>
+        <Link
+          href="/cabins"
+          className="transition-colors hover:text-accent-400"
+        >
+          Cabins
+        </Link>
+      </li>
+      <li>
+        <Link href="/about" className="transition-colors hover:text-accent-400">
+          About
+        </Link>
+      </li>
+      <li>
+        {session?.user?.image ? (
           <Link
-            href="/cabins"
-            className="transition-colors hover:text-accent-400"
+            href="/account"
+            className="flex items-center gap-2 transition-colors hover:text-accent-400"
           >
-            Cabins
+            <img
+              src={session.user.image}
+              alt={session.user.name}
+              className="h-8 rounded-full"
+            />
+            <span>Guest area</span>
           </Link>
-        </li>
-        <li>
-          <Link
-            href="/about"
-            className="transition-colors hover:text-accent-400"
-          >
-            About
-          </Link>
-        </li>
-        <li>
+        ) : (
           <Link
             href="/account"
             className="transition-colors hover:text-accent-400"
           >
             Guest area
           </Link>
-        </li>
-      </ul>
-    </nav>
+        )}
+      </li>
+    </ul>
   );
 }
