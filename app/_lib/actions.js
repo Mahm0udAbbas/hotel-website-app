@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
-import { updateGuest } from "./data-service";
+import { deleteBooking, getBookings, updateGuest } from "./data-service";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/account" });
@@ -28,4 +28,21 @@ export async function updateGuestAction(formData) {
   };
   await updateGuest(session.user.guestId, updatedGuest);
   revalidatePath("account/profile");
+}
+
+export async function deleteReservation(bookingId) {
+  const session = await auth();
+  if (!session) throw new Error("You must login to delete reservation");
+
+  const geustBookings = await getBookings(session.user.guestId);
+  const guestBookingIds = geustBookings.map((booking) => booking.id);
+
+  if (!guestBookingIds.includes(bookingId)) {
+    throw new Error(
+      "You can't delete a reservation that does not belong to you",
+    );
+  }
+  await deleteBooking(bookingId);
+
+  revalidatePath("account/reservations");
 }
