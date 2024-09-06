@@ -1,12 +1,10 @@
 "use client";
 
 import { updateGuestAction } from "../_lib/actions";
-import { useFormStatus } from "react-dom";
-import Spinner from "./Spinner";
-import SpinnerMini from "./SpinnerMini";
+import Button from "./Button";
 
 export default function UpdateProfileForm({ children, guest }) {
-  const { fullName, email, nationality, nationalID, countryFlag } = guest;
+  const { fullName, email, nationalID, countryFlag } = guest;
   return (
     <form
       action={updateGuestAction}
@@ -55,27 +53,8 @@ export default function UpdateProfileForm({ children, guest }) {
       </div>
 
       <div className="flex items-center justify-end gap-6">
-        <Button />
+        <Button pendingLabel="Updating">Update profile</Button>
       </div>
     </form>
-  );
-}
-
-function Button() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      disabled={pending}
-      className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
-    >
-      {pending ? (
-        <div className="flex items-center justify-between gap-2">
-          {" "}
-          <SpinnerMini /> <span>Updating</span>
-        </div>
-      ) : (
-        "Update profile"
-      )}
-    </button>
   );
 }

@@ -2,7 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
-import { deleteBooking, getBookings, updateGuest } from "./data-service";
+import {
+  deleteBooking,
+  getBookings,
+  updateBooking,
+  updateGuest,
+} from "./data-service";
+import { redirect } from "next/navigation";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/account" });
@@ -28,6 +34,31 @@ export async function updateGuestAction(formData) {
   };
   await updateGuest(session.user.guestId, updatedGuest);
   revalidatePath("account/profile");
+}
+export async function updateReservationtAction(formData) {
+  const session = await auth();
+  if (!session) throw new Error("you must login to update");
+  const bookingId = Number(formData.get("reservationId"));
+
+  const geustBookings = await getBookings(session.user.guestId);
+  const guestBookingIds = geustBookings.map((booking) => booking.id);
+
+  if (!guestBookingIds.includes(bookingId)) {
+    throw new Error(
+      "You can't update a reservation that does not belong to you",
+    );
+  }
+  const numGuests = Number(formData.get("numGuests"));
+  const observations = formData.get("observations");
+
+  const updatedReserationt = {
+    numGuests,
+    observations,
+  };
+  await updateBooking(bookingId, updatedReserationt);
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+
+  redirect("/account/reservations");
 }
 
 export async function deleteReservation(bookingId) {
