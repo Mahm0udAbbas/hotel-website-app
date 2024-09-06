@@ -1,12 +1,31 @@
 "use client";
 
+import { differenceInDays } from "date-fns";
 import { useReservation } from "./ReservationsContext";
+import { createReservation } from "../_lib/actions";
+import Button from "./Button";
 
 function ReservationForm({ settings, bookedDates, cabin, user }) {
   // CHANGE
-  const maxCapacity = cabin.maxCapacity;
+  const { maxCapacity, id, regularPrice, discount } = cabin;
 
-  const { range } = useReservation();
+  const { range, resetRange } = useReservation();
+  const endDate = range?.to;
+  const startDate = range?.from;
+
+  const numNights = differenceInDays(endDate, startDate);
+  const cabinPrice = numNights * (regularPrice - discount);
+
+  const bookingData = {
+    cabinId: id,
+    startDate,
+    endDate,
+    numNights,
+    cabinPrice,
+  };
+
+  const createBookingWithData = createReservation.bind(null, bookingData);
+
   return (
     <div className="">
       <div className="flex items-center justify-between bg-primary-800 px-8 py-2 text-sm text-primary-300">
@@ -24,7 +43,13 @@ function ReservationForm({ settings, bookedDates, cabin, user }) {
         </div>
       </div>
 
-      <form className="flex flex-col gap-5 bg-primary-900 px-8 py-6 text-lg">
+      <form
+        action={async (formData) => {
+          await createBookingWithData(formData);
+          resetRange();
+        }}
+        className="flex flex-col gap-5 bg-primary-900 px-8 py-6 text-lg"
+      >
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
@@ -57,11 +82,13 @@ function ReservationForm({ settings, bookedDates, cabin, user }) {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center md:flex-col md:items-start lg:flex-row lg:items-center">
-          <p className="text-base text-primary-300">Start by selecting dates</p>
-
-          <button className="bg-accent-500 px-3 py-1.5 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 sm:px-6 sm:py-3">
-            Reserve now
-          </button>
+          {!(startDate && endDate) ? (
+            <p className="text-base text-primary-300">
+              Start by selecting dates
+            </p>
+          ) : (
+            <Button pendingLable="reserving">Reserve now</Button>
+          )}
         </div>
       </form>
     </div>

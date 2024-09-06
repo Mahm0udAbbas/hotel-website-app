@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import {
+  createBooking,
   deleteBooking,
   getBookings,
   updateBooking,
@@ -76,4 +77,24 @@ export async function deleteReservation(bookingId) {
   await deleteBooking(bookingId);
 
   revalidatePath("account/reservations");
+}
+
+export async function createReservation(bookingData, formData) {
+  const session = await auth();
+  if (!session) throw new Error("You must login to delete reservation");
+
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations"),
+    totalPrice: bookingData.cabinPrice,
+    extrasPrice: 0,
+    isPaid: false,
+    hasBreakfast: false,
+    status: "unconfirmed",
+  };
+  await createBooking(newBooking);
+  revalidatePath(`/cabin/${bookingData.cabinId}`);
+  redirect("/cabins/thankyou");
 }
